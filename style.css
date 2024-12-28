@@ -1,0 +1,324 @@
+/* Hide scrollbar but keep the page scrollable */
+body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Prevent text selection */
+* {
+    user-select: none;
+  }
+  
+
+.scrollable-container {
+    overflow-y: scroll;  /* Enables vertical scrolling */
+    height: 100%;
+    
+}
+ /* Top Bar Styles */
+ .top-bar {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0); /* Transparent background */
+    display: flex;
+    justify-content: center; /* Center buttons horizontally */
+    align-items: center;
+    padding: 0 0;
+    position: absolute;
+    top: 0;
+    backdrop-filter: blur(0px); /* Optional blur effect for better transparency */
+  }
+
+  /* Logo Styles */
+  .logo {
+    position: absolute;
+    left: 20px; /* Place logo in the top left */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .logo img {
+    height: 50px;
+  }
+
+  /* Button Styles */
+  .top-bar .buttons {
+    display: flex;
+    
+   
+    gap: 10px;
+  }
+
+  .top-bar button {
+    background-color: transparent; /* Make the inside of the button transparent */
+    color: rgb(0, 0, 0);
+    border: 1px solid black; /* Add black border */
+    padding: 8px 8px;
+    
+    cursor: pointer;
+    font-size: 11px;
+    border-radius: 20px; /* Make the buttons stadium-shaped */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border 0.3s ease; /* Add transition for glowing effect */
+    text-transform: uppercase;
+    z-index: 3;
+  }
+
+  .top-bar button:hover {
+    background-color: #ffffff00; /* Change the background color on hover */
+    color: white; /* Change text color on hover for better contrast */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.897), 0 0 40px rgba(255, 255, 255, 0.788); /* Glowing effect */
+    border-color: #000000; /* Change border color to white on hover for contrast */
+  }
+
+  h1 {
+      
+    font-size: 10vw; /* Scalable font size */
+    color: #333;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    opacity: 100%;
+    animation: fadeIn 1s forwards 0.5s;
+    z-index: 0;
+  }
+
+
+/* Stadium Container: keep the layout as it is, but reduce the height */
+.stadium-container {
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: center; /* Center stadiums with controlled spacing */
+    align-items: center; /* Align items to the top */
+    
+    width: 100%;
+    max-width: 100%; /* Maximum width to avoid excessive spread */
+    height: 500px; /* Adjust container height if needed */
+    position: relative;
+    perspective: 1000px;
+    margin-top: -30px; /* To avoid overlapping with the top bar */
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
+    gap: 35px; /* Space between the stadiums */
+    overflow: visible;
+  }
+  
+  
+  
+  /* Stadium Styles: remove the margin-top to bring them to the top */
+  .stadium {
+    width: 80px; /* Fixed width */
+    height: 40vh; /* Fixed height */
+    position: relative;
+    
+    margin-top: 50px; /* Remove top margin to align with the top */
+    transform-style: preserve-3d;
+    transform-origin: center center; /* Keep the transformation origin to the top center */
+    transition: all 2s ease-in-out,transform .5s ease, opacity .5s ease;
+    animation: landAnimation 2s ease-out forwards, randomHeight 10s ease-in-out infinite;
+    transform: translateY(0) rotateX(0deg); /* Reset state */
+    opacity: 1; /* Fully visible */
+    
+  }
+  
+  
+  .stadium .front,
+  .stadium .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+  
+  }
+  
+  /* Front side with background image */
+  .stadium .front {
+    background-image: url('images/stadium-image1.jpg'); /* Ensure this file exists */
+  }
+  
+  /* Back side with video */
+  .stadium .back {
+    transform: rotateY(180deg);
+    overflow: hidden; /* Ensure video does not overflow */
+  }
+  
+  .stadium .back video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure video covers the entire back */
+    z-index: -1; /* Ensure video stays behind the content */
+  }
+  
+  
+  
+  .stadium.landAnimation {
+    animation: landAnimation 1s ease-out; /* Apply the landing animation */
+  }  
+  
+  
+  
+  .stadium.randomHeight {
+    animation: randomHeight 7s ease-in-out infinite;
+  }
+  
+   
+  
+   /* Random Height Animation */
+  @keyframes randomHeight {
+    0% {
+      height: 40vh; /* Initial height */
+    }
+    25% {
+      height: 45vh; /* Gradual increase */
+    }
+    50% {
+      height: 30vh; /* Decrease to the minimum height */
+    }
+    75% {
+      height: 48vh; /* Gradual increase */
+    }
+    100% {
+      height: 40vh; /* Back to original height */
+    }
+  }
+  
+     /* Landing Animation */
+     @keyframes landAnimation {
+      0% {
+        transform: translateY(100vh) rotateY(30deg); /* Start below the viewport */
+        opacity: 0;
+      }
+      25% {
+        transform: translateY(-10vh) rotateY(80deg); /* Moving up */
+        opacity: 0.7;
+      }
+      50% {
+        transform: translateY(-5vh) rotateY(180deg); /* Flip mid-air */
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(0) rotateY(0deg); /* Final position */
+        opacity: 1; /* Fully visible */
+        
+      }
+    }
+
+
+    @keyframes jiggle {
+
+        0%{
+            transform: translateY(0) rotateY(0deg); /* Final position */
+            opacity: 1; /* Fully visible */
+        }
+        20% {
+            transform: translateY(-5vh) rotateY(180deg); /* Flip mid-air */
+            opacity: 0.9;
+        }
+        50% {
+            transform: translateY(-10vh) rotateY(80deg); /* Moving up */
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(100vh) rotateY(30deg); /* Start below the viewport */
+            opacity: 0;
+        }
+        
+    }
+
+    .stadium.landAnimation {
+        animation: landAnimation 1s ease-out forwards;
+      }
+      
+      .stadium.jiggle {
+        animation: takeoff 1s ease-in forwards;
+      }
+      
+
+
+  
+
+  /* Apply the height animation to each stadium */
+  .stadium:nth-child(1) {
+    animation: landAnimation 2s ease-out, randomHeight 10s ease-in-out infinite .3s;
+  }
+  .stadium:nth-child(2) {
+    animation: landAnimation 2.2s ease-out, randomHeight 9s ease-in-out infinite 1.2s;
+  }
+  .stadium:nth-child(3) {
+    animation: landAnimation 2.4s ease-out, randomHeight 7s ease-in-out infinite .4s;
+  }
+  .stadium:nth-child(4) {
+    animation: landAnimation 2.6s ease-out, randomHeight 5s ease-in-out infinite 1.9s;
+  }
+  .stadium:nth-child(5) {
+    animation: landAnimation 2.4s ease-out, randomHeight 8s ease-in-out infinite .5s;
+  }
+  .stadium:nth-child(6) {
+    animation: landAnimation 2.2s ease-out, randomHeight 7s ease-in-out infinite 1.4s;
+  }
+  .stadium:nth-child(7) {
+    animation: landAnimation 2s ease-out, randomHeight 9s ease-in-out infinite .3s;
+  }
+
+
+
+
+
+/* Styling for the website text (appears after stadiums) */
+.website-text {
+    margin-top: 50px;  /* Space between the stadium container and the text */
+    padding: 20px;
+    color: white;
+    background-color: rgb(0, 0, 0); /* Semi-transparent background for visibility */
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    text-align: center;
+    max-width: 90%; /* Limit the width to make it look nicer */
+    height: 3000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Styling for the heading (h1) */
+.website-text h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 36px; /* Larger font for the heading */
+    font-weight: bold; /* Make heading bold */
+}
+
+/* Styling for the paragraph (p) */
+.website-text p {
+    margin: 10px 0 0 0; /* Space between heading and paragraph */
+    font-size: 18px; /* Slightly smaller font for the paragraph */
+    line-height: 1.6; /* Increase line height for readability */
+}
+
+
+
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Hide the scrollbar but allow scrolling */
+.scrollable-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollable-container {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
